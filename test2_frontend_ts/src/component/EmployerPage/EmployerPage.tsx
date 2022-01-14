@@ -6,9 +6,8 @@ import Container from "@mui/material/Container";
 // import FacebookIcon from '@mui/icons-material/Facebook';
 // import TwitterIcon from '@mui/icons-material/Twitter';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Header from "./Header";
-import MainFeaturedPost from "./MainFeaturedPost";
-import Footer from "./Footer";
+// import MainFeaturedPost from "./MainFeaturedPost";
+// import FeaturedPost from "./FeaturedPost";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Pagination } from "@mui/material";
@@ -57,29 +56,6 @@ const mainFeaturedPost = {
   // linkText: 'Continue reading…',
 };
 
-// const featuredPosts = [
-//   {
-//     title: 'Featured post',
-//     date: 'Nov 12',
-//     description:
-//       'This is a wider card with supporting text below as a natural lead-in to additional content.',
-//     image: 'https://source.unsplash.com/random',
-//     imageLabel: 'Image Text',
-//     salaryMin: 10,
-//     salaryMax: 20
-//   },
-//   {
-//     title: 'Post title',
-//     date: 'Nov 11',
-//     description:
-//       'This is a wider card with supporting text below as a natural lead-in to additional content.',
-//     image: 'https://source.unsplash.com/random',
-//     imageLabel: 'Image Text',
-//     salaryMin: 10,
-//     salaryMax: 20
-//   },
-// ];
-
 const theme = createTheme();
 
 export default function Blog() {
@@ -103,10 +79,20 @@ export default function Blog() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Blog" sections={sections} />
         <main>
-          <MainFeaturedPost post={mainFeaturedPost} />
-          <JobList jobList={jobs}/>
+          {/* <MainFeaturedPost post={mainFeaturedPost} />
+          <Grid container spacing={4}>
+            {jobs?.map((post) => (
+              <FeaturedPost
+                // post={post}
+                key={post.title}
+                image="https://source.unsplash.com/random"
+                imageLabel="Image Text"
+                job={post}
+              />
+            ))}
+          </Grid> */}
+          <JobList jobList={jobs} />
           <Pagination
             style={{
               display: "flex",
@@ -121,10 +107,6 @@ export default function Blog() {
           />
         </main>
       </Container>
-      <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      />
     </ThemeProvider>
   );
 }

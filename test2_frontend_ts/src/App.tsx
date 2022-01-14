@@ -7,6 +7,8 @@ import SignInPage from "./component/SignInPage"
 import SignUpPage from "./component/SignUpPage"
 import HomePage from "./component/HomePage/HomePage";
 import CreatePostPage from "./component/CreatePostPage";
+import JobList from "./component/JobList";
+import EmployerPage from "./component/EmployerPage/EmployerPage";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/createpost/:id" element={<CreatePostPage />}></Route>
+          <Route path="/employer" element={<EmployerPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

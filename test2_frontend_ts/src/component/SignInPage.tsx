@@ -19,14 +19,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const theme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const [role, setRole] = useState<string>('Employee');
+  const [role, setRole] = useState<string>("Employee");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,16 +41,28 @@ export default function SignInSide() {
     var pin = data.get("pin");
 
     if (phone && pin) {
-      
-      console.log(`http://localhost:8080/${role.toLowerCase()}/logIn/${phone}&${pin}`)
+      console.log(
+        `http://localhost:8080/${role.toLowerCase()}/logIn/${phone}&${pin}`
+      );
       axios
-        .get(`http://localhost:8080/${role.toLowerCase()}/logIn/${phone}&${pin}`)
+        .get(
+          `http://localhost:8080/${role.toLowerCase()}/logIn/${phone}&${pin}`
+        )
         .then((res) => {
           console.log(res.data);
 
           if (res.data) {
-            navigate("../signUp", { replace: true });
-            return
+            window.sessionStorage.setItem("userId", res.data.id);
+            // const roleSession = window.sessionStorage.getItem("userId");
+
+            if (role === "Employee") {
+              navigate("../", { replace: true });
+              return;
+            }
+            if (role === "Employer") {
+              navigate("../", { replace: true });
+              return
+            }
           }
         })
         .catch((error) => console.log(error));
@@ -102,8 +114,7 @@ export default function SignInSide() {
               noValidate
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
-            >
-            </Box>
+            ></Box>
             <Box
               component="form"
               noValidate
