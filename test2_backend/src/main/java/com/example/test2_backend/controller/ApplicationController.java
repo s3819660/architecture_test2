@@ -4,12 +4,13 @@ import com.example.test2_backend.model.Application;
 import com.example.test2_backend.service.ApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping(value = "")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ApplicationController {
     @Autowired
     ApplicationService applicationService;

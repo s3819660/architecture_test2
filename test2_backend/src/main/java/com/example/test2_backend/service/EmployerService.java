@@ -2,6 +2,7 @@ package com.example.test2_backend.service;
 
 import com.example.test2_backend.model.Employer;
 import com.example.test2_backend.repository.EmployerRepository;
+import com.example.test2_backend.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,9 @@ import java.util.List;
 public class EmployerService {
     @Autowired
     EmployerRepository employerRepository;
+
+    @Autowired
+    JobRepository jobRepository;
 
     public Employer createEmployer(Employer employer) {
         return employerRepository.save(employer);
@@ -41,8 +45,12 @@ public class EmployerService {
 
     public String deleteEmployer(long id) {
         try {
+            // delete all job by this employer
+            jobRepository.deleteAll();
+
             employerRepository.deleteById(id);
-            return "Successfully deleted employer";
+
+            return "Successfully deleted employer and all jobs posted by this employer";
         } catch (Exception e) {
             e.printStackTrace();
             return "Fail to delete employer";
