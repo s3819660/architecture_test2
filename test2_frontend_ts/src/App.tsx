@@ -5,14 +5,18 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignInPage from "./component/SignInPage"
 import SignUpPage from "./component/SignUpPage"
+import HomePage from "./component/HomePage/HomePage";
+import CreatePostPage from "./component/CreatePostPage";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignInPage />}></Route>
+          <Route path="/signin" element={<SignInPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/createpost/:id" element={<CreatePostPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

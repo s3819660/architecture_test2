@@ -112,7 +112,7 @@ export default function SignUp() {
     }
   };
 
-  const [role, setRole] = useState<String>();
+  const [role, setRole] = useState<string>();
   // const [category, setCategory] = useState<String>("Choose a specialization");
   // const [name, setName] = useState<String>();
   // const [phone, setPhone] = useState<String>();

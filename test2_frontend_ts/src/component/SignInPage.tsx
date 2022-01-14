@@ -26,7 +26,7 @@ const theme = createTheme();
 
 export default function SignInSide() {
   const navigate = useNavigate();
-  const [role, setRole] = useState<String>('Employee');
+  const [role, setRole] = useState<string>('Employee');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
