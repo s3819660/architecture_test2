@@ -44,4 +44,20 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable int id) {
         return employeeService.deleteEmployee(id);
     }
+
+    @PostMapping(value = "/employee/signUp")
+    public Employee signUp(@RequestBody Employee employee) {
+        return employeeService.signUp(employee.getFullName(),
+                employee.getPhone(),
+                employee.getAge(),
+                employee.getAddress(),
+                employee.getCategory(),
+                employee.getQualification(),
+                employee.getExperience());
+    }
+
+    @GetMapping(value = "/employee/logIn/{phone}&{pin}")
+    public Employee logIn(@PathVariable String phone, @PathVariable String pin) {
+        return employeeService.logIn(phone, pin);
+    }
 }

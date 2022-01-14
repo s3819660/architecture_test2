@@ -5,8 +5,11 @@ import com.example.test2_backend.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -16,12 +19,28 @@ public class JobService {
     @Autowired
     JobRepository jobRepository;
 
+    private final String JOB_CACHE = "JOB";
+
+//    @Autowired
+//    RedisTemplate<String , Object> redisTemplate;
+//    private HashOperations<String, Long, Job> hashOperations;
+//
+//    @PostConstruct
+//    private void initializeHashOperations(){
+//        hashOperations = redisTemplate.opsForHash();
+//    }
+//
+//    public void saveToCache(Job job) {
+//        hashOperations.put(JOB_CACHE, job.getId(), job);
+//    }
+
     public Job createJob(Job job) {
         job.setDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return jobRepository.save(job);
     }
 
     public Job updateJob(Job job) {
+//        saveToCache(job);
         return jobRepository.save(job);
     }
 
@@ -35,7 +54,12 @@ public class JobService {
 
     public Job getJobById(long id) {
         try {
-            return jobRepository.findById(id).get();
+//            Job job = hashOperations.get(JOB_CACHE, id);
+//            if (job != null) return job;
+
+            Job job = jobRepository.findById(id).get();
+//            saveToCache(job);
+            return job;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

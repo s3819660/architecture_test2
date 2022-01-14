@@ -14,4 +14,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     public List<Employee> findAllByCategoryContaining(String category);
     public List<Employee> findAllByAddressContaining(String address);
     public List<Employee> findAllByExperience(int experience);
+    public Employee findAllByPhone(String phone);
 }
