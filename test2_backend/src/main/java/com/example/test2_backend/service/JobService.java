@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -15,6 +17,7 @@ public class JobService {
     JobRepository jobRepository;
 
     public Job createJob(Job job) {
+        job.setDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
         return jobRepository.save(job);
     }
 
@@ -49,5 +52,11 @@ public class JobService {
         }
     }
 
+    public Page<Job> getJobsByCategoryContainingPageDateAsc(String category, int page, int size) {
+        return jobRepository.findAllByCategoryContainingPageDateAsc(category, PageRequest.of(page, size));
+    }
 
+    public Page<Job> getJobsByCategoryContainingPageDateDesc(String category, int page, int size) {
+        return jobRepository.findAllByCategoryContainingPageDateDes(category, PageRequest.of(page, size));
+    }
 }

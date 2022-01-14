@@ -20,6 +20,16 @@ public class JobController {
         return jobService.getAllJobsPage(page, size);
     }
 
+    @GetMapping(value = "/jobs/{category}/asc/{page}/{size}")
+    public Page<Job> getJobsByCategoryContainingPageDateAsc(@PathVariable String category, @PathVariable int page, @PathVariable int size) {
+        return jobService.getJobsByCategoryContainingPageDateAsc(category, page, size);
+    }
+
+    @GetMapping(value = "/jobs/{category}/des/{page}/{size}")
+    public Page<Job> getJobsByCategoryContainingPageDateDes(@PathVariable String category, @PathVariable int page, @PathVariable int size) {
+        return jobService.getJobsByCategoryContainingPageDateDesc(category, page, size);
+    }
+
     @GetMapping(value = "/jobs")
     public List<Job> getAllJobs() {
         return jobService.getAllJobs();

@@ -1,6 +1,7 @@
 package com.example.test2_backend.service;
 
 import com.example.test2_backend.model.Employer;
+import com.example.test2_backend.model.Job;
 import com.example.test2_backend.repository.EmployerRepository;
 import com.example.test2_backend.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,10 @@ public class EmployerService {
     public String deleteEmployer(long id) {
         try {
             // delete all job by this employer
-            jobRepository.deleteAll();
+            List<Job> jobs = jobRepository.findAllByEmployerId(id);
+            for (Job job: jobs) {
+                jobRepository.deleteById(job.getId());
+            }
 
             employerRepository.deleteById(id);
 
