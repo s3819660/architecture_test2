@@ -20,8 +20,7 @@ export type Job = {
     phone: string;
     pin: string;
     address: string;
-  };
-  application: any;
+  }
 };
 
 interface JobListProps {

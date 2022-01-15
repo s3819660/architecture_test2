@@ -45,17 +45,16 @@ export default function Blog() {
   }, [])
 
   useEffect(() => {
-    console.log('url=', `http://localhost:8080/jobs/employer=${userId}/des/${page - 1}/${PAGE_SIZE}`)
-    if (!userId) return
     axios
     .get(`http://localhost:8080/jobs/employer=${userId}/des/${page - 1}/${PAGE_SIZE}`)
     .then((res) => {
+      // console.log("res.data=", res.data)
       setJobs(res.data.content);
       setTotalPages(res.data.totalPages);
-      console.log("page=", page, "jobs=", jobs)
+      // console.log("page=", page, "totalPages=", totalPages)
     })
     .catch((error) => console.log(error));
-  }, [page, userId]);
+  }, [page, userId, totalPages]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,6 +102,7 @@ export default function Blog() {
     </React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
+      {(!userId || userId === '0') ? "Loading....." :
         <main>
           <JobList jobList={jobs} employerId={Number(userId)} />
           <Pagination
@@ -117,7 +117,8 @@ export default function Blog() {
             showLastButton
             onChange={(e: any, value: number) => setPage(value)}
           />
-        </main>
+        </main> 
+        }
       </Container>
     </ThemeProvider>
   );

@@ -19,6 +19,8 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import ApplicationsTable from "./ApplicationsTable";
+import { Job } from "../JobList";
 
 const theme = createTheme();
 
@@ -30,6 +32,25 @@ export type Employer = {
   address: string;
 };
 
+export type Employee = {
+  id: SVGAnimatedNumber;
+  address: string;
+  age: number;
+  category: string;
+  experience: number;
+  fullName: string;
+  phone: string;
+  pin: string;
+  qualification: string;
+};
+
+export type Application = {
+  id: number;
+  date: Date;
+  job: Job;
+  employee: Employee;
+};
+
 export default function SignUp() {
   const navigate = useNavigate();
   var params = useParams();
@@ -39,14 +60,20 @@ export default function SignUp() {
   const [employerId, setEmployerId] = useState<number>();
   const [employer, setEmployer] = useState<Employer>();
 
+  const [pageSize, setPageSize] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [page, setPage] = useState(0);
+
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [careerLevel, setCareerLevel] = useState(0);
-  const [salaryMin, setSalaryMin] = useState<number>();
-  const [salaryMax, setSalaryMax] = useState<number>();
+  const [salaryMin, setSalaryMin] = useState<number>(0);
+  const [salaryMax, setSalaryMax] = useState<number>(0);
   const [role, setRole] = useState("");
+
+  const [applications, setApplications] = useState<Application[]>();
 
   useEffect(() => {
     setEmployerId(Number(userId));
@@ -69,22 +96,36 @@ export default function SignUp() {
   useEffect(() => {
     console.log("jobId=", jobId);
 
-    if (!jobId) return;
+    if (!jobId || jobId === 0) return;
+
+    // get job info
     axios
       .get(`http://localhost:8080/job/${jobId}`)
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setTitle(res.data.title);
-        setLocation(res.data.location)
-        setCategory(res.data.category)
-        setDescription(res.data.description)
-        setCareerLevel(Number(res.data.careerLevel))
-        setSalaryMin(Number(res.data.salaryMin))
-        setSalaryMax(Number(res.data.salaryMax))
-        setRole(res.data.role)
+        setLocation(res.data.location);
+        setCategory(res.data.category);
+        setDescription(res.data.description);
+        setCareerLevel(Number(res.data.careerLevel));
+        setSalaryMin(Number(res.data.salaryMin));
+        setSalaryMax(Number(res.data.salaryMax));
+        setRole(res.data.role);
       })
       .catch((error) => console.log(error));
-  }, [jobId]);
+
+    // get application of this job
+    axios
+      .get(
+        `http://localhost:8080/applications/job=${jobId}/des/${page}/${pageSize}`
+      )
+      .then((res) => {
+        const val = res.data;
+        setApplications(val.content);
+        setTotalPages(res.data.totalPages);
+      })
+      .catch((error) => console.log(error));
+  }, [jobId, page, pageSize]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -110,15 +151,15 @@ export default function SignUp() {
             address: employer.address,
           },
         };
-  
+
         console.log(job);
         axios
           .post(`http://localhost:8080/job`, job)
           .then((res) => {
             // console.log(res);
             console.log(res.data);
-            navigate("../", { replace: true });
-            return
+            navigate("../employer", { replace: true });
+            return;
           })
           .catch((error) => {
             // Error
@@ -143,15 +184,15 @@ export default function SignUp() {
             address: employer.address,
           },
         };
-  
+
         console.log(job);
         axios
           .post(`http://localhost:8080/job`, job)
           .then((res) => {
             // console.log(res);
             console.log(res.data);
-            navigate("../", { replace: true });
-            return
+            navigate("../employer", { replace: true });
+            return;
           })
           .catch((error) => {
             // Error
@@ -164,7 +205,7 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={theme}>
       {employerId ? (
-        <Container component="main" maxWidth="md">
+        <Container component="main" maxWidth="lg">
           <CssBaseline />
           <Box
             sx={{
@@ -241,16 +282,16 @@ export default function SignUp() {
                     </>
                   ) : (
                     <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="category"
-                      label="Category"
-                      id="category"
-                      value={category}
-                      disabled
-                    />
-                  </Grid>
+                      <TextField
+                        required
+                        fullWidth
+                        name="category"
+                        label="Category"
+                        id="category"
+                        value={category}
+                        disabled
+                      />
+                    </Grid>
                   )}
                 </Grid>
                 <Grid item xs={12}>
@@ -322,17 +363,26 @@ export default function SignUp() {
                   />
                 </Grid>
               </Grid>
-              
+
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                {jobId === 0 ? 'Create' : 'Edit'} Ad
+                {jobId === 0 ? "Create" : "Edit"} Ad
               </Button>
             </Box>
           </Box>
+          {applications ? (
+            <ApplicationsTable
+              applications={applications}
+              setPage={setPage}
+              page={page}
+              totalPages={totalPages}
+              setPageSize={setPageSize}
+            />
+          ) : null}
         </Container>
       ) : null}
     </ThemeProvider>

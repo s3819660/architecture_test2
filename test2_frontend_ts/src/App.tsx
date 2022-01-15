@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignInPage from "./component/SignInPage"
 import SignUpPage from "./component/SignUpPage"
 import HomePage from "./component/HomePage/HomePage";
-import CreateEditPostPage from "./component/CreateEditPostPage";
+import CreateEditPostPage from "./component/CreateEditPostPage/CreateEditPostPage";
 import EmployerPage from "./component/EmployerPage/EmployerPage";
 
 function App() {

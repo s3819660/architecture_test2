@@ -65,7 +65,8 @@ public class EmployeeService {
 
     public Employee logIn(String phone, String pin) {
         Employee admin = employeeRepository.findAllByPhone(phone);
-
+        System.out.println(phone + " " + pin);
+        System.out.println(admin.toString());
         if (admin.getPin().equals(pin))
             return admin;
 
