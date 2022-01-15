@@ -1,7 +1,7 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+import {Container, Button} from "@mui/material";
 // import GitHubIcon from '@mui/icons-material/GitHub';
 // import FacebookIcon from '@mui/icons-material/Facebook';
 // import TwitterIcon from '@mui/icons-material/Twitter';
@@ -11,7 +11,8 @@ import MainFeaturedPost from "./MainFeaturedPost";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pagination } from "@mui/material";
+import { Pagination, Toolbar } from "@mui/material";
+import LinkMUI from '@mui/material/Link';
 import JobList from "../JobList";
 import { Job } from "../JobList";
 
@@ -69,6 +70,8 @@ export default function Blog() {
   const [category, setCategory] = useState("Education");
   const [userId, setUserId] = useState<string | null>('');
 
+  const [searchCategory, setSearchCategory] = useState('');
+
   useEffect(() => {
     setUserId(window.sessionStorage.getItem('userId'));
   }, []);
@@ -87,7 +90,7 @@ export default function Blog() {
         console.log("page=", page, "jobs=", jobs);
       })
       .catch((error) => console.log(error));
-  }, [page]);
+  }, [page, category]);
 
   useEffect(() => {
     console.log("jobs=", jobs)
@@ -98,11 +101,30 @@ export default function Blog() {
     setUserId(null)
   }
 
+  const handleSelectCategory = (category: string) => {
+    console.log("handleSelectCategory=", category)
+    setCategory(category)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
         <Header title="Job ATM" sections={sections} userId={userId} handleSignOut={handleSignOut}/>
+        <Toolbar
+        component="nav"
+        variant="dense"
+        sx={{ justifyContent: "space-between", overflowX: "auto" }}
+      >
+        {sections.map((section) => (
+          <Button
+            sx={{ p: 1, flexShrink: 0 }}
+            onClick={() => handleSelectCategory(section.title)}
+          >
+            {section.title}
+          </Button>
+        ))}
+      </Toolbar>
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <JobList jobList={jobs} employerId={0} />

@@ -1,11 +1,11 @@
 import * as React from "react";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
+import {Toolbar, TextField, Button} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import LinkMUI from '@mui/material/Link';
 
 interface HeaderProps {
   sections: ReadonlyArray<{
@@ -24,7 +24,8 @@ export default function Header(props: HeaderProps) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        Welcome!
+        <TextField />
+        <IconButton><SearchIcon/></IconButton>
         <Typography
           component="h2"
           variant="h5"
@@ -35,9 +36,6 @@ export default function Header(props: HeaderProps) {
         >
           <Link to="/">{title}</Link>
         </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
         {/* <Link to="/createpost/1">
           <Button variant="contained" size="small">
             Post Job
@@ -70,7 +68,7 @@ export default function Header(props: HeaderProps) {
         sx={{ justifyContent: "space-between", overflowX: "auto" }}
       >
         {sections.map((section) => (
-          <Link
+          <LinkMUI
             color="inherit"
             noWrap
             key={section.title}
@@ -79,7 +77,7 @@ export default function Header(props: HeaderProps) {
             sx={{ p: 1, flexShrink: 0 }}
           >
             {section.title}
-          </Link>
+          </LinkMUI>
         ))}
       </Toolbar> */}
     </React.Fragment>
