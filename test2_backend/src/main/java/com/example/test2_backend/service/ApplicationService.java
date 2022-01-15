@@ -51,6 +51,10 @@ public class ApplicationService {
         return applicationRepository.findAllByJobIdOrderByDateDesc(id, PageRequest.of(page, size));
     }
 
+    public Page<Application> getAllByEmployeeIdOrderByDateAsc(long id, int page, int size) {
+        return applicationRepository.findAllByEmployeeIdOrderByDateDesc(id, PageRequest.of(page, size));
+    }
+
     public Application getApplicationById(long id) {
         try {
 //            Application application = hashOperations.get(APPLICATION_CACHE, id);

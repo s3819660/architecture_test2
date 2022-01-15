@@ -122,7 +122,7 @@ export default function StickyHeadTable(props: ApplicationsTableProps) {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell key="" style={{ minWidth: 170 }} />
+              {/* <TableCell key="" style={{ minWidth: 170 }} /> */}
               {columns.map((column) => (
                 <TableCell
                   key={column.id}

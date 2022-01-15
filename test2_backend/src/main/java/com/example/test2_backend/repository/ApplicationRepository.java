@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     public Page<Application> findAllByJobIdOrderByDateDesc(long id, Pageable pageable);
+
+    public Page<Application> findAllByEmployeeIdOrderByDateDesc(long id, Pageable pageable);
 }

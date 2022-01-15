@@ -34,7 +34,7 @@ export type Employer = {
 };
 
 export type Employee = {
-  id: SVGAnimatedNumber;
+  id: number;
   address: string;
   age: number;
   category: string;

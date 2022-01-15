@@ -23,6 +23,7 @@ import axios from "axios";
 // import ApplicationsTable from "./ApplicationsTable";
 import { Job } from "../JobList";
 import Header from "../HomePage/Header";
+import ApplicationsTable from "../CreateEditPostPage/ApplicationsTable";
 
 const theme = createTheme();
 
@@ -122,6 +123,18 @@ export default function EmployeePage() {
           setPhone(res.data.phone);
           setQualification(res.data.qualification);
           setCategory(res.data.category);
+        })
+        .catch((error) => console.log(error));
+
+        // Get Applications
+        axios
+        .get(
+          `http://localhost:8080/applications/employee=${userId}/des/${page}/${pageSize}`
+        )
+        .then((res) => {
+          const val = res.data;
+          setApplications(val.content);
+          setTotalPages(res.data.totalPages);
         })
         .catch((error) => console.log(error));
     }
@@ -357,7 +370,7 @@ export default function EmployeePage() {
               </Button>
             </Box>
           </Box>
-          {/* {applications ? (
+          {applications ? (
             <ApplicationsTable
               applications={applications}
               setPage={setPage}
@@ -365,7 +378,7 @@ export default function EmployeePage() {
               totalPages={totalPages}
               setPageSize={setPageSize}
             />
-          ) : null} */}
+          ) : null}
         </Container>
       ) : null}
     </ThemeProvider>

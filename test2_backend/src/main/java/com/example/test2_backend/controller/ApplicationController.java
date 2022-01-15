@@ -20,6 +20,11 @@ public class ApplicationController {
         return applicationService.getAllByJobIdOrderByDateAsc(jobId, page, size);
     }
 
+    @GetMapping(value = "/applications/employee={employeeId}/des/{page}/{size}")
+    public Page<Application> getAllByEmployeeIdOrderByDateAsc(@PathVariable int employeeId, @PathVariable int page, @PathVariable int size) {
+        return applicationService.getAllByEmployeeIdOrderByDateAsc(employeeId, page, size);
+    }
+
     @GetMapping(value = "/applications")
     public List<Application> getAllApplications() {
         return applicationService.getAllApplications();
