@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import LinkMUI from '@mui/material/Link';
+import { useState } from "react";
 
 interface HeaderProps {
   sections: ReadonlyArray<{
@@ -14,18 +15,21 @@ interface HeaderProps {
   }>;
   title: string;
   userId: string | null;
-  handleSignOut: () => void
+  handleSignOut: () => void,
+  setSearchKeyword: (keyword: string) => void,
+  searchKeyword: string
 }
 
 export default function Header(props: HeaderProps) {
   const navigate = useNavigate();
-  const { sections, title, userId, handleSignOut } = props;
+  const { sections, title, userId, handleSignOut, searchKeyword, setSearchKeyword } = props;
+  const [searchVal, setSearchVal] = useState('')
 
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <TextField />
-        <IconButton><SearchIcon/></IconButton>
+        <TextField value={searchVal} onChange={(e) => setSearchVal(e.target.value)}/>
+        <IconButton onClick={() => setSearchKeyword(searchVal)}><SearchIcon/></IconButton>
         <Typography
           component="h2"
           variant="h5"

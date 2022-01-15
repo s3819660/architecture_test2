@@ -90,6 +90,8 @@ export default function EmployeePage() {
 
   const [applications, setApplications] = useState<Application[]>();
 
+  
+  const [searchKeyword, setSearchKeyword] = useState('')
   useEffect(() => {
     setUserId(window.sessionStorage.getItem("userId"));
   }, []);
@@ -204,6 +206,8 @@ export default function EmployeePage() {
             sections={sections}
             userId={userId}
             handleSignOut={handleSignOut}
+            searchKeyword={searchKeyword}
+            setSearchKeyword={setSearchKeyword}
           />
           <Box
             sx={{

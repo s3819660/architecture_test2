@@ -35,6 +35,11 @@ public class JobController {
         return jobService.findAllByEmployerIdOrderByDateDesc(employer, page, size);
     }
 
+    @GetMapping(value = "jobs/title={title}/des/{page}/{size}")
+    public Page<Job> getJobsByTitleContainingPageDateDesc (@PathVariable String title, @PathVariable int page, @PathVariable int size) {
+        return jobService.getJobsByTitleContainingPageDateDesc(title, page, size);
+    }
+
     @GetMapping(value = "/jobs")
     public List<Job> getAllJobs() {
         return jobService.getAllJobs();

@@ -87,4 +87,8 @@ public class JobService {
     public Page<Job> findAllByEmployerIdOrderByDateDesc(long id, int page, int size) {
         return jobRepository.findAllByEmployerIdOrderByDateDesc(id, PageRequest.of(page, size));
     }
+
+    public Page<Job> getJobsByTitleContainingPageDateDesc(String title, int page, int size) {
+        return jobRepository.findAllByTitleContainingOrderByDateDesc(title, PageRequest.of(page, size));
+    }
 }

@@ -64,13 +64,13 @@ const theme = createTheme();
 
 export default function Blog() {
   const [jobs, setJobs] = useState<Job[]>();
-  const PAGE_SIZE = 1;
+  const PAGE_SIZE = 4;
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState("Education");
   const [userId, setUserId] = useState<string | null>('');
 
-  const [searchCategory, setSearchCategory] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     setUserId(window.sessionStorage.getItem('userId'));
@@ -106,11 +106,30 @@ export default function Blog() {
     setCategory(category)
   }
 
+  useEffect(() => {
+    console.log("searchKeyword=", searchKeyword)
+
+    axios
+    .get(
+      `http://localhost:8080/jobs/title=${searchKeyword}/des/${
+        page - 1
+      }/${PAGE_SIZE}`
+    )
+    .then((res) => {
+      console.log(res.data)
+      setJobs(res.data.content);
+      setTotalPages(res.data.totalPages);
+      console.log("page=", page, "jobs=", jobs);
+    })
+    .catch((error) => console.log(error));
+
+  }, [page, searchKeyword])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Job ATM" sections={sections} userId={userId} handleSignOut={handleSignOut}/>
+        <Header title="Job ATM" sections={sections} userId={userId} handleSignOut={handleSignOut} setSearchKeyword={setSearchKeyword} searchKeyword={searchKeyword}/>
         <Toolbar
         component="nav"
         variant="dense"
