@@ -30,18 +30,6 @@ services:
       KAFKA_JVM_PERFORMANCE_OPTS: "-Xmx500M -Xmx500M"
 
 
-      
-
-  redis:
-    image: redis:6.0.3-alpine
-    ports:
-    - "6379:6379"
-    restart: always
-    volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf    
-      - ./data:/data
-    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
-
 #docker compose exec broker kafka-topics --create --topic data --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1
 
 

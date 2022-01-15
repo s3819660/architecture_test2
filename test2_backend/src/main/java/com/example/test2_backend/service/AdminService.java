@@ -18,7 +18,7 @@ public class AdminService {
     @Autowired
     AdminRepository adminRepository;
 
-    private final String ADMIN_CACHE = "ADMIN";
+//    private final String ADMIN_CACHE = "ADMIN";
 
 //    @Autowired
 //    RedisTemplate<String , Object> redisTemplate;
