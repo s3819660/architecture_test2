@@ -24,7 +24,7 @@ export default function Header(props: HeaderProps) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Button size="small">Subscribe</Button>
+        Welcome!
         <Typography
           component="h2"
           variant="h5"
@@ -33,7 +33,7 @@ export default function Header(props: HeaderProps) {
           noWrap
           sx={{ flex: 1 }}
         >
-          {title}
+          <Link to="/">{title}</Link>
         </Typography>
         <IconButton>
           <SearchIcon />

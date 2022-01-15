@@ -66,6 +66,7 @@ export default function SignUp() {
   const [page, setPage] = useState(0);
 
   const [title, setTitle] = useState("");
+  const [date, setDate] = useState<Date | null>(null);
   const [location, setLocation] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -107,6 +108,7 @@ export default function SignUp() {
         setTitle(res.data.title);
         setLocation(res.data.location);
         setCategory(res.data.category);
+        setDate(res.data.date)
         setDescription(res.data.description);
         setCareerLevel(Number(res.data.careerLevel));
         setSalaryMin(Number(res.data.salaryMin));
@@ -171,6 +173,7 @@ export default function SignUp() {
           id: jobId,
           title: String(data.get("title")).trim(),
           location: String(data.get("location")).trim(),
+          date: date,
           category: category,
           description: String(data.get("description")).trim(),
           careerLevel: Number(data.get("careerLevel")),

@@ -81,12 +81,17 @@ export default function Blog() {
         }/${PAGE_SIZE}`
       )
       .then((res) => {
+        console.log(res.data)
         setJobs(res.data.content);
         setTotalPages(res.data.totalPages);
         console.log("page=", page, "jobs=", jobs);
       })
       .catch((error) => console.log(error));
   }, [page]);
+
+  useEffect(() => {
+    console.log("jobs=", jobs)
+  }, [jobs])
 
   const handleSignOut = () => {
     sessionStorage.clear()
@@ -116,8 +121,8 @@ export default function Blog() {
         </main>
       </Container>
       <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
+        title="Job ATM"
+        description="Have a great time searching for the perfect job for you!"
       />
     </ThemeProvider>
   );

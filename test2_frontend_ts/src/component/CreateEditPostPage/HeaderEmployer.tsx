@@ -19,16 +19,21 @@ interface HeaderEmployerProps {
 }
 
 export default function HeaderEmployer(props: HeaderEmployerProps) {
+  const navigate = useNavigate();
   const {userId} = props
+
+  const handleSignOut = () => {
+    sessionStorage.clear()
+    navigate("../", { replace: true });
+  }
   
   return (
-    <ThemeProvider theme={theme}>
+    <>
       {(!userId || userId === "0") ? (
         "Loading....."
       ) : (
         <React.Fragment>
           <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Link to={`/employer`}>
               <Typography
                 component="h2"
                 variant="h5"
@@ -37,19 +42,23 @@ export default function HeaderEmployer(props: HeaderEmployerProps) {
                 noWrap
                 sx={{ flex: 1 }}
               >
+                <Link to='/employer'>
                 Employer
+                </Link>
               </Typography>
-            </Link>
+              <Button onClick={() => handleSignOut()} variant='outlined'>
+                Sign Out
+              </Button>
           </Toolbar>
           <Toolbar
             component="nav"
             variant="dense"
             sx={{ justifyContent: "space-between", overflowX: "auto" }}
           >
-            <Link to={`../createpost/${userId}/0`}>Manage Jobs</Link>
+            <Link to={`../createpost/${userId}/0`}>Create Job Ad</Link>
           </Toolbar>
         </React.Fragment>
       )}
-    </ThemeProvider>
+    </>
   );
 }
