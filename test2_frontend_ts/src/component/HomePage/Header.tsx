@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   sections: ReadonlyArray<{
@@ -12,10 +13,13 @@ interface HeaderProps {
     url: string;
   }>;
   title: string;
+  userId: string | null;
+  handleSignOut: () => void
 }
 
 export default function Header(props: HeaderProps) {
-  const { sections, title } = props;
+  const navigate = useNavigate();
+  const { sections, title, userId, handleSignOut } = props;
 
   return (
     <React.Fragment>
@@ -39,11 +43,26 @@ export default function Header(props: HeaderProps) {
             Post Job
           </Button>
         </Link> */}
-        <Link to="/signup">
-          <Button variant="outlined" size="small">
-            Sign up
-          </Button>
-        </Link>
+        {!userId ? (
+          <Link to="/signup">
+            <Button variant="outlined" size="small">
+              Sign up
+            </Button>
+          </Link>
+        ) : (
+          <>
+            <Link to="/">
+              <Button variant="outlined" size="small" onClick={() => handleSignOut()}>
+                Sign Out
+              </Button>
+            </Link>
+            <Link to="/employee">
+              <Button variant="contained" size="small">
+                Profile
+              </Button>
+            </Link>
+          </>
+        )}
       </Toolbar>
       {/* <Toolbar
         component="nav"

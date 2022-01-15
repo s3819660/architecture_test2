@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Menu,
   MenuItem,
-  Link,
   Grid,
   Box,
   TextField,
@@ -18,7 +17,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import axios from "axios";
 
 const theme = createTheme();
@@ -162,6 +161,8 @@ export default function SignUp() {
           or
 
           <Button sx={{marginLeft: '10px'}} onClick={() => setRole("Employer")}>Employer</Button>
+          <br/>
+          <Link to="../signin">Already have an account? Sign In</Link>
           </div>
         ) : (
           <Box
@@ -328,7 +329,7 @@ export default function SignUp() {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link to="../signin">
                     Already have an account? Sign in
                   </Link>
                 </Grid>

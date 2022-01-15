@@ -188,7 +188,7 @@ export default function SignUp() {
 
         console.log(job);
         axios
-          .post(`http://localhost:8080/job`, job)
+          .put(`http://localhost:8080/job`, job)
           .then((res) => {
             // console.log(res);
             console.log(res.data);

@@ -8,6 +8,7 @@ import SignUpPage from "./component/SignUpPage"
 import HomePage from "./component/HomePage/HomePage";
 import CreateEditPostPage from "./component/CreateEditPostPage/CreateEditPostPage";
 import EmployerPage from "./component/CreateEditPostPage/EmployerPage";
+import EmployeePage from "./component/EmployeePage/EmployeePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/createpost/:userId/:postId" element={<CreateEditPostPage />}></Route>
           <Route path="/employer" element={<EmployerPage />}></Route>
+          <Route path="/employee" element={<EmployeePage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

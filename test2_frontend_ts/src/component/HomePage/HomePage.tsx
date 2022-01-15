@@ -67,6 +67,11 @@ export default function Blog() {
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
   const [category, setCategory] = useState("Education");
+  const [userId, setUserId] = useState<string | null>('');
+
+  useEffect(() => {
+    setUserId(window.sessionStorage.getItem('userId'));
+  }, []);
 
   useEffect(() => {
     axios
@@ -78,16 +83,21 @@ export default function Blog() {
       .then((res) => {
         setJobs(res.data.content);
         setTotalPages(res.data.totalPages);
-        console.log("page=", page, "jobs=", jobs)
+        console.log("page=", page, "jobs=", jobs);
       })
       .catch((error) => console.log(error));
   }, [page]);
+
+  const handleSignOut = () => {
+    sessionStorage.clear()
+    setUserId(null)
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Blog" sections={sections} />
+        <Header title="Job ATM" sections={sections} userId={userId} handleSignOut={handleSignOut}/>
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
           <JobList jobList={jobs} employerId={0} />
