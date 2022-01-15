@@ -139,7 +139,7 @@ export default function StickyHeadTable(props: ApplicationsTableProps) {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align={"center"} style={{ minWidth: "80px" }}>
-                    <Button variant="contained" style={{ width: "80px" }}>
+                    <Button variant="contained" style={{ width: "80px" }} >
                       Accept
                     </Button>
                     <Button variant="outlined" style={{ width: "80px" }}>

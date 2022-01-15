@@ -9,13 +9,14 @@ import {
   CssBaseline,
   Button,
   Avatar,
+  Toolbar,
 } from "@mui/material";
 // import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -204,6 +205,22 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
+                <React.Fragment>
+      {/* <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Link to={`/employer`}>
+          <Typography
+            component="h2"
+            variant="h5"
+            color="inherit"
+            align="center"
+            noWrap
+            sx={{ flex: 1 }}
+          >
+            Employer
+          </Typography>
+        </Link>
+      </Toolbar> */}
+    </React.Fragment>
       {employerId ? (
         <Container component="main" maxWidth="lg">
           <CssBaseline />

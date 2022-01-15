@@ -54,7 +54,7 @@ export default function SignInSide() {
           if (res.data) {
             window.sessionStorage.setItem("userId", res.data.id);
             // const userSession = window.sessionStorage.getItem("userId");
-
+            // console.log("local storage", window.sessionStorage.getItem("userId"))
             if (role === "Employee") {
               navigate("../", { replace: true });
               return;

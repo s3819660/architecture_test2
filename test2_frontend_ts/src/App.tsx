@@ -7,7 +7,7 @@ import SignInPage from "./component/SignInPage"
 import SignUpPage from "./component/SignUpPage"
 import HomePage from "./component/HomePage/HomePage";
 import CreateEditPostPage from "./component/CreateEditPostPage/CreateEditPostPage";
-import EmployerPage from "./component/EmployerPage/EmployerPage";
+import EmployerPage from "./component/CreateEditPostPage/EmployerPage";
 
 function App() {
   return (

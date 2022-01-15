@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Job } from "./JobList";
+import axios from "axios";
 
 interface FeaturedPostProps {
   // post: {
@@ -29,6 +30,17 @@ interface FeaturedPostProps {
 
 export default function FeaturedPost(props: FeaturedPostProps) {
   const { job, image, imageLabel, employerId } = props;
+
+  const handleDeleteJob = () => {
+    axios.delete(`http://localhost:8080/job/${job.id}`)
+    .then(res => {
+      console.log(res);
+      alert("Successfully delete job!")
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
 
   return (
     <Grid item xs={12} md={6}>
@@ -55,9 +67,12 @@ export default function FeaturedPost(props: FeaturedPostProps) {
               Continue reading...
             </Typography>
           ) : (
+            <>
             <Link to={`/createpost/${employerId}/${job.id}`}>
             <Button>Edit</Button>
             </Link>
+            <Button onClick={handleDeleteJob}>Delete</Button>
+            </>
           )}
         </CardContent>
         <CardMedia

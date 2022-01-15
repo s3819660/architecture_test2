@@ -8,6 +8,7 @@ import { Pagination, Toolbar, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import JobList from "../JobList";
 import {Job} from  "../JobList";
+import HeaderEmployer from "./HeaderEmployer";
 
 const sections = [
   { title: "Software/IT", url: "#" },
@@ -41,10 +42,10 @@ export default function Blog() {
 
   useEffect(() => {
     setUserId(window.sessionStorage.getItem("userId"));
-    console.log("userId=", userId)
   }, [])
 
   useEffect(() => {
+    // console.log(page, userId, totalPages)
     axios
     .get(`http://localhost:8080/jobs/employer=${userId}/des/${page - 1}/${PAGE_SIZE}`)
     .then((res) => {
@@ -58,51 +59,11 @@ export default function Blog() {
 
   return (
     <ThemeProvider theme={theme}>
-          <React.Fragment>
-      <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          sx={{ flex: 1 }}
-        >
-          Employer
-        </Typography>
-        <Link to={`/createpost/${userId}/0`}>
-          <Button variant="contained" size="small">
-            Post Job
-          </Button>
-        </Link>
-        <Link to="/signup">
-          <Button variant="outlined" size="small">
-            Sign out
-          </Button>
-        </Link>
-      </Toolbar>
-      {/* <Toolbar
-        component="nav"
-        variant="dense"
-        sx={{ justifyContent: "space-between", overflowX: "auto" }}
-      >
-        {sections.map((section) => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            sx={{ p: 1, flexShrink: 0 }}
-          >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar> */}
-    </React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
       {(!userId || userId === '0') ? "Loading....." :
+      <>
+        <HeaderEmployer userId={userId} />
         <main>
           <JobList jobList={jobs} employerId={Number(userId)} />
           <Pagination
@@ -118,6 +79,7 @@ export default function Blog() {
             onChange={(e: any, value: number) => setPage(value)}
           />
         </main> 
+        </>
         }
       </Container>
     </ThemeProvider>
