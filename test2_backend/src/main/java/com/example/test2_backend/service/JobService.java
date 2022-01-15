@@ -39,9 +39,23 @@ public class JobService {
         return jobRepository.save(job);
     }
 
+//    String title, String location, String salaryRange, double salaryMin, double salaryMax, String category, String description, int careerLevel, String role, LocalDateTime date, Employer employer
     public Job updateJob(Job job) {
+        Job job1 = jobRepository.findById(job.getId()).get();
+        job1.setTitle(job.getTitle());
+        job1.setDescription(job.getDescription());
+        job1.setEmployer(job.getEmployer());
+        job1.setCareerLevel(job.getCareerLevel());
+        job1.setCategory(job.getCategory());
+        job1.setLocation(job.getLocation());
+        job1.setSalaryMin(job.getSalaryMin());
+        job1.setSalaryMax(job.getSalaryMax());
+        job1.setSalaryRange(job.getSalaryRange());
+        job1.setRole(job.getRole());
+
+
 //        saveToCache(job);
-        return jobRepository.save(job);
+        return jobRepository.save(job1);
     }
 
     public List<Job> getAllJobs() {
