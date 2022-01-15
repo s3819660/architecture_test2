@@ -78,7 +78,7 @@ export default function Blog() {
       .then((res) => {
         setJobs(res.data.content);
         setTotalPages(res.data.totalPages);
-        // console.log("page=", page, "jobs=", jobs)
+        console.log("page=", page, "jobs=", jobs)
       })
       .catch((error) => console.log(error));
   }, [page]);

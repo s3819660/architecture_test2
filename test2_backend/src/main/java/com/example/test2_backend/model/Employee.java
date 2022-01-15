@@ -54,7 +54,7 @@ public class Employee {
 //        this.experience = experience;
 //        this.applications = applications;
 //    }
-    
+
     public Employee(String fullName, String phone, String pin, int age, String address, String category, String qualification, int experience) {
         this.fullName = fullName;
         this.phone = phone;

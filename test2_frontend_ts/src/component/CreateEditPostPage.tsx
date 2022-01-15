@@ -77,11 +77,11 @@ export default function SignUp() {
         setTitle(res.data.title);
         setLocation(res.data.location)
         setCategory(res.data.category)
-        setDescription(res.data.category)
-        setCareerLevel(res.data.category)
-        setSalaryMin(res.data.category)
-        setSalaryMax(res.data.category)
-        setRole(res.data.category)
+        setDescription(res.data.description)
+        setCareerLevel(Number(res.data.careerLevel))
+        setSalaryMin(Number(res.data.salaryMin))
+        setSalaryMax(Number(res.data.salaryMax))
+        setRole(res.data.role)
       })
       .catch((error) => console.log(error));
   }, [jobId]);
@@ -92,36 +92,72 @@ export default function SignUp() {
     // console.log("employer=", employer)
 
     if (employer) {
-      const job = {
-        title: String(data.get("title")).trim(),
-        location: String(data.get("location")).trim(),
-        category: String(data.get("category")).trim(),
-        description: String(data.get("description")).trim(),
-        careerLevel: Number(data.get("careerLevel")),
-        minSalary: Number(data.get("minSalary")),
-        maxSalary: Number(data.get("maxSalary")),
-        role: String(data.get("role")).trim(),
-        employer: {
-          id: employer.id,
-          name: employer.name,
-          phone: employer.phone,
-          pin: employer.pin,
-          address: employer.address,
-        },
-      };
-
-      console.log(job);
-      axios
-        .post(`http://localhost:8080/job`, job)
-        .then((res) => {
-          // console.log(res);
-          console.log(res.data);
-          navigate("../", { replace: true });
-        })
-        .catch((error) => {
-          // Error
-          console.log(error.response);
-        });
+      if (jobId === 0) {
+        const job = {
+          title: String(data.get("title")).trim(),
+          location: String(data.get("location")).trim(),
+          category: String(data.get("category")).trim(),
+          description: String(data.get("description")).trim(),
+          careerLevel: Number(data.get("careerLevel")),
+          salaryMin: Number(data.get("minSalary")),
+          salaryMax: Number(data.get("maxSalary")),
+          role: String(data.get("role")).trim(),
+          employer: {
+            id: employer.id,
+            name: employer.name,
+            phone: employer.phone,
+            pin: employer.pin,
+            address: employer.address,
+          },
+        };
+  
+        console.log(job);
+        axios
+          .post(`http://localhost:8080/job`, job)
+          .then((res) => {
+            // console.log(res);
+            console.log(res.data);
+            navigate("../", { replace: true });
+            return
+          })
+          .catch((error) => {
+            // Error
+            console.log(error.response);
+          });
+      } else {
+        const job = {
+          id: jobId,
+          title: String(data.get("title")).trim(),
+          location: String(data.get("location")).trim(),
+          category: category,
+          description: String(data.get("description")).trim(),
+          careerLevel: Number(data.get("careerLevel")),
+          salaryMin: Number(data.get("minSalary")),
+          salaryMax: Number(data.get("maxSalary")),
+          role: String(data.get("role")).trim(),
+          employer: {
+            id: employer.id,
+            name: employer.name,
+            phone: employer.phone,
+            pin: employer.pin,
+            address: employer.address,
+          },
+        };
+  
+        console.log(job);
+        axios
+          .post(`http://localhost:8080/job`, job)
+          .then((res) => {
+            // console.log(res);
+            console.log(res.data);
+            navigate("../", { replace: true });
+            return
+          })
+          .catch((error) => {
+            // Error
+            console.log(error.response);
+          });
+      }
     }
   };
 
@@ -269,7 +305,7 @@ export default function SignUp() {
                     id="minSalary"
                     label="Min Salary"
                     autoFocus
-                    value={salaryMin}
+                    value={String(salaryMin)}
                     onChange={(e) => setSalaryMin(Number(e.target.value))}
                   />
                 </Grid>
@@ -281,18 +317,19 @@ export default function SignUp() {
                     label="Max Salary"
                     name="maxSalary"
                     autoComplete="price"
-                    value={salaryMax}
+                    value={String(salaryMax)}
                     onChange={(e) => setSalaryMax(Number(e.target.value))}
                   />
                 </Grid>
               </Grid>
+              
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Create Ad
+                {jobId === 0 ? 'Create' : 'Edit'} Ad
               </Button>
             </Box>
           </Box>

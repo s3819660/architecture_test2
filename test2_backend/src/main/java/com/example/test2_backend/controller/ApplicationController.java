@@ -15,10 +15,10 @@ public class ApplicationController {
     @Autowired
     ApplicationService applicationService;
 
-//    @GetMapping(value = "/employers/{page}/{size}")
-//    public Page<Application> getAllEmployersPage(@PathVariable int page, @PathVariable int size) {
-//        return applicationService.getAllEmployersPage(page, size);
-//    }
+    @GetMapping(value = "/applications/job={jobId}/des/{page}/{size}")
+    public Page<Application> getAllEmployersPage(@PathVariable int jobId, @PathVariable int page, @PathVariable int size) {
+        return applicationService.getAllByJobIdOrderByDateAsc(jobId, page, size);
+    }
 
     @GetMapping(value = "/applications")
     public List<Application> getAllApplications() {

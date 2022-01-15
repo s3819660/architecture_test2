@@ -47,9 +47,9 @@ public class ApplicationService {
         return applicationRepository.findAll();
     }
 
-//    public Page<Application> getAllEmployersPage(int page, int size) {
-//        return applicationRepository.findAll(PageRequest.of(page, size));
-//    }
+    public Page<Application> getAllByJobIdOrderByDateAsc(long id, int page, int size) {
+        return applicationRepository.findAllByJobIdOrderByDateDesc(id, PageRequest.of(page, size));
+    }
 
     public Application getApplicationById(long id) {
         try {

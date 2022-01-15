@@ -6,8 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignInPage from "./component/SignInPage"
 import SignUpPage from "./component/SignUpPage"
 import HomePage from "./component/HomePage/HomePage";
-import CreatePostPage from "./component/CreatePostPage";
-import JobList from "./component/JobList";
+import CreateEditPostPage from "./component/CreateEditPostPage";
 import EmployerPage from "./component/EmployerPage/EmployerPage";
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
           <Route path="/signin" element={<SignInPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/createpost/:userId/:postId" element={<CreatePostPage />}></Route>
+          <Route path="/createpost/:userId/:postId" element={<CreateEditPostPage />}></Route>
           <Route path="/employer" element={<EmployerPage />}></Route>
         </Routes>
       </BrowserRouter>
