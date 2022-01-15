@@ -34,11 +34,11 @@ export default function Header(props: HeaderProps) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Link to="/createpost/1">
+        {/* <Link to="/createpost/1">
           <Button variant="contained" size="small">
             Post Job
           </Button>
-        </Link>
+        </Link> */}
         <Link to="/signup">
           <Button variant="outlined" size="small">
             Sign up

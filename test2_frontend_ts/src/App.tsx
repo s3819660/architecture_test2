@@ -18,7 +18,7 @@ function App() {
           <Route path="/signin" element={<SignInPage />}></Route>
           <Route path="/signup" element={<SignUpPage />}></Route>
           <Route path="/" element={<HomePage />}></Route>
-          <Route path="/createpost/:id" element={<CreatePostPage />}></Route>
+          <Route path="/createpost/:userId/:postId" element={<CreatePostPage />}></Route>
           <Route path="/employer" element={<EmployerPage />}></Route>
         </Routes>
       </BrowserRouter>

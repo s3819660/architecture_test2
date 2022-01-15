@@ -36,14 +36,26 @@ public class Employee {
     @Column
     private int experience; // Years of experience
 
-    @OneToMany
-    @JsonIgnoreProperties({"application"})
-    private List<Application> applications;
+//    @OneToMany
+//    @JsonIgnoreProperties({"employee"})
+//    private List<Application> applications;
 
     public Employee() {
     }
 
-    public Employee(String fullName, String phone, String pin, int age, String address, String category, String qualification, int experience, List<Application> applications) {
+//    public Employee(String fullName, String phone, String pin, int age, String address, String category, String qualification, int experience, List<Application> applications) {
+//        this.fullName = fullName;
+//        this.phone = phone;
+//        this.pin = pin;
+//        this.age = age;
+//        this.address = address;
+//        this.category = category;
+//        this.qualification = qualification;
+//        this.experience = experience;
+//        this.applications = applications;
+//    }
+    
+    public Employee(String fullName, String phone, String pin, int age, String address, String category, String qualification, int experience) {
         this.fullName = fullName;
         this.phone = phone;
         this.pin = pin;
@@ -52,7 +64,6 @@ public class Employee {
         this.category = category;
         this.qualification = qualification;
         this.experience = experience;
-        this.applications = applications;
     }
 
     public Long getId() {
@@ -127,11 +138,11 @@ public class Employee {
         this.experience = experience;
     }
 
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+//    public List<Application> getApplications() {
+//        return applications;
+//    }
+//
+//    public void setApplications(List<Application> applications) {
+//        this.applications = applications;
+//    }
 }

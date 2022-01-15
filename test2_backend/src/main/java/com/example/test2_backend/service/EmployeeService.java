@@ -51,8 +51,7 @@ public class EmployeeService {
                 address,
                 category,
                 qualification,
-                experience,
-                null);
+                experience);
         return employeeRepository.save(employee);
     }
 

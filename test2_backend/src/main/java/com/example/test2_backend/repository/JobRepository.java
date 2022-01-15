@@ -34,4 +34,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     public Page<Job> findAllByCategoryContainingPageMaxAsc(@Param("category") String category, Pageable pageable);
     @Query("SELECT j FROM Job j WHERE LOWER(j.category) LIKE LOWER(CONCAT('%',:category,'%')) ORDER BY j.salaryMax DESC")
     public Page<Job> findAllByCategoryContainingPageMaxDes(@Param("category") String category, Pageable pageable);
+
+    public Page<Job> findAllByEmployerIdOrderByDateDesc(long id, Pageable pageable);
 }

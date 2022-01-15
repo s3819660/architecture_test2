@@ -1,39 +1,13 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-// import GitHubIcon from '@mui/icons-material/GitHub';
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import TwitterIcon from '@mui/icons-material/Twitter';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import MainFeaturedPost from "./MainFeaturedPost";
-// import FeaturedPost from "./FeaturedPost";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Pagination } from "@mui/material";
+import { Pagination, Toolbar, Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import JobList from "../JobList";
-
-export type Job = {
-  id: number;
-  title: string;
-  location: string;
-  salaryRange: string;
-  salaryMin: number;
-  salaryMax: number;
-  category: string;
-  description: string;
-  careerLevel: number;
-  role: string;
-  date: Date;
-  employer: {
-    id: number;
-    name: string;
-    phone: string;
-    pin: string;
-    address: string;
-  };
-  application: any;
-};
+import {Job} from  "../JobList";
 
 const sections = [
   { title: "Software/IT", url: "#" },
@@ -63,36 +37,74 @@ export default function Blog() {
   const PAGE_SIZE = 1;
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
+  const [userId, setUserId] =  useState<string | null>('0');
 
   useEffect(() => {
+    setUserId(window.sessionStorage.getItem("userId"));
+    console.log("userId=", userId)
+  }, [])
+
+  useEffect(() => {
+    console.log('url=', `http://localhost:8080/jobs/employer=${userId}/des/${page - 1}/${PAGE_SIZE}`)
+    if (!userId) return
     axios
-    .get(`http://localhost:8080/jobs/education/des/${page - 1}/${PAGE_SIZE}`)
+    .get(`http://localhost:8080/jobs/employer=${userId}/des/${page - 1}/${PAGE_SIZE}`)
     .then((res) => {
       setJobs(res.data.content);
       setTotalPages(res.data.totalPages);
-      // console.log("page=", page, "jobs=", jobs)
+      console.log("page=", page, "jobs=", jobs)
     })
     .catch((error) => console.log(error));
-  }, [page]);
+  }, [page, userId]);
 
   return (
     <ThemeProvider theme={theme}>
+          <React.Fragment>
+      <Toolbar sx={{ borderBottom: 1, borderColor: "divider" }}>
+        <Typography
+          component="h2"
+          variant="h5"
+          color="inherit"
+          align="center"
+          noWrap
+          sx={{ flex: 1 }}
+        >
+          Employer
+        </Typography>
+        <Link to={`/createpost/${userId}/0`}>
+          <Button variant="contained" size="small">
+            Post Job
+          </Button>
+        </Link>
+        <Link to="/signup">
+          <Button variant="outlined" size="small">
+            Sign out
+          </Button>
+        </Link>
+      </Toolbar>
+      {/* <Toolbar
+        component="nav"
+        variant="dense"
+        sx={{ justifyContent: "space-between", overflowX: "auto" }}
+      >
+        {sections.map((section) => (
+          <Link
+            color="inherit"
+            noWrap
+            key={section.title}
+            variant="body2"
+            href={section.url}
+            sx={{ p: 1, flexShrink: 0 }}
+          >
+            {section.title}
+          </Link>
+        ))}
+      </Toolbar> */}
+    </React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
         <main>
-          {/* <MainFeaturedPost post={mainFeaturedPost} />
-          <Grid container spacing={4}>
-            {jobs?.map((post) => (
-              <FeaturedPost
-                // post={post}
-                key={post.title}
-                image="https://source.unsplash.com/random"
-                imageLabel="Image Text"
-                job={post}
-              />
-            ))}
-          </Grid> */}
-          <JobList jobList={jobs} />
+          <JobList jobList={jobs} employerId={Number(userId)} />
           <Pagination
             style={{
               display: "flex",

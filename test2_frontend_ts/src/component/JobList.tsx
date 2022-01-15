@@ -25,11 +25,12 @@ export type Job = {
 };
 
 interface JobListProps {
-  jobList: Job[] | undefined
+  jobList: Job[] | undefined,
+  employerId: number
 }
 
 export default function JobList(props: JobListProps) {
-  const { jobList } = props;
+  const { jobList, employerId } = props;
 
   return (
         <>
@@ -40,6 +41,7 @@ export default function JobList(props: JobListProps) {
                 image="https://source.unsplash.com/random"
                 imageLabel="Image Text"
                 job={post}
+                employerId={employerId}
               />
             ))}
           </Grid>

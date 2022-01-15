@@ -13,28 +13,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Pagination } from "@mui/material";
 import JobList from "../JobList";
-
-export type Job = {
-  id: number;
-  title: string;
-  location: string;
-  salaryRange: string;
-  salaryMin: number;
-  salaryMax: number;
-  category: string;
-  description: string;
-  careerLevel: number;
-  role: string;
-  date: Date;
-  employer: {
-    id: number;
-    name: string;
-    phone: string;
-    pin: string;
-    address: string;
-  };
-  application: any;
-};
+import { Job } from "../JobList";
 
 const sections = [
   { title: "Software/IT", url: "#" },
@@ -87,16 +66,21 @@ export default function Blog() {
   const PAGE_SIZE = 1;
   const [totalPages, setTotalPages] = useState(1);
   const [page, setPage] = useState(1);
+  const [category, setCategory] = useState("Education");
 
   useEffect(() => {
     axios
-    .get(`http://localhost:8080/jobs/education/des/${page - 1}/${PAGE_SIZE}`)
-    .then((res) => {
-      setJobs(res.data.content);
-      setTotalPages(res.data.totalPages);
-      // console.log("page=", page, "jobs=", jobs)
-    })
-    .catch((error) => console.log(error));
+      .get(
+        `http://localhost:8080/jobs/category=${category}/des/${
+          page - 1
+        }/${PAGE_SIZE}`
+      )
+      .then((res) => {
+        setJobs(res.data.content);
+        setTotalPages(res.data.totalPages);
+        // console.log("page=", page, "jobs=", jobs)
+      })
+      .catch((error) => console.log(error));
   }, [page]);
 
   return (
@@ -106,7 +90,7 @@ export default function Blog() {
         <Header title="Blog" sections={sections} />
         <main>
           <MainFeaturedPost post={mainFeaturedPost} />
-          <JobList jobList={jobs}/>
+          <JobList jobList={jobs} employerId={0} />
           <Pagination
             style={{
               display: "flex",

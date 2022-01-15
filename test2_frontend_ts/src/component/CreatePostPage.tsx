@@ -17,47 +17,80 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const theme = createTheme();
 
 export type Employer = {
-  id: number,
-  name: string,
-  phone: string,
-  pin: string,
-  address: string
-}
+  id: number;
+  name: string;
+  phone: string;
+  pin: string;
+  address: string;
+};
 
 export default function SignUp() {
   const navigate = useNavigate();
   var params = useParams();
-  var { id } = params;
+  var { userId } = params;
+  var { postId } = params;
+  const [jobId, setJobId] = useState<number>();
   const [employerId, setEmployerId] = useState<number>();
   const [employer, setEmployer] = useState<Employer>();
 
-  useEffect(() => {
-    setEmployerId(Number(id));
+  const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const [category, setCategory] = useState("");
+  const [description, setDescription] = useState("");
+  const [careerLevel, setCareerLevel] = useState(0);
+  const [salaryMin, setSalaryMin] = useState<number>();
+  const [salaryMax, setSalaryMax] = useState<number>();
+  const [role, setRole] = useState("");
 
-    axios.get(`http://localhost:8080/employer/${id}`)
-    .then(res => {
-      setEmployer({
-        id: res.data.id,
-        name: res.data.name,
-        phone: res.data.phone,
-        pin: res.data.pin,
-        address: res.data.address
+  useEffect(() => {
+    setEmployerId(Number(userId));
+    setJobId(Number(postId));
+
+    axios
+      .get(`http://localhost:8080/employer/${userId}`)
+      .then((res) => {
+        setEmployer({
+          id: res.data.id,
+          name: res.data.name,
+          phone: res.data.phone,
+          pin: res.data.pin,
+          address: res.data.address,
+        });
       })
-    })
-    .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    console.log("jobId=", jobId);
+
+    if (!jobId) return;
+    axios
+      .get(`http://localhost:8080/job/${jobId}`)
+      .then((res) => {
+        console.log(res.data)
+        setTitle(res.data.title);
+        setLocation(res.data.location)
+        setCategory(res.data.category)
+        setDescription(res.data.category)
+        setCareerLevel(res.data.category)
+        setSalaryMin(res.data.category)
+        setSalaryMax(res.data.category)
+        setRole(res.data.category)
+      })
+      .catch((error) => console.log(error));
+  }, [jobId]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // console.log("employer=", employer)
-    
+
     if (employer) {
       const job = {
         title: String(data.get("title")).trim(),
@@ -73,22 +106,22 @@ export default function SignUp() {
           name: employer.name,
           phone: employer.phone,
           pin: employer.pin,
-          address: employer.address
-        }
-      }
+          address: employer.address,
+        },
+      };
 
       console.log(job);
       axios
-      .post(`http://localhost:8080/job`, job)
-      .then((res) => {
-        // console.log(res);
-        console.log(res.data);
-        navigate("../", { replace: true });
-      })
-      .catch((error) => {
-        // Error
-        console.log(error.response);
-      });
+        .post(`http://localhost:8080/job`, job)
+        .then((res) => {
+          // console.log(res);
+          console.log(res.data);
+          navigate("../", { replace: true });
+        })
+        .catch((error) => {
+          // Error
+          console.log(error.response);
+        });
     }
   };
 
@@ -126,6 +159,8 @@ export default function SignUp() {
                     label="Title"
                     name="title"
                     autoComplete="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -136,33 +171,51 @@ export default function SignUp() {
                     label="Location"
                     id="location"
                     autoComplete="location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <InputLabel id="demo-simple-select-label">
-                    Select a specialization:
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="category"
-                    name="category"
-                    // value={category}
-                    label="Specialization"
-                    // defaultValue={"Choose a specialization"}
-                    // onChange={(e) => setCategory(e.target.value as string)}
-                    fullWidth
-                  >
-                    <MenuItem value="Software/IT">Software/IT</MenuItem>
-                    <MenuItem value="Electrical">Electrical</MenuItem>
-                    {/* <MenuItem value='Electronics'>Electronics</MenuItem> */}
-                    <MenuItem value="Education">Education</MenuItem>
-                    <MenuItem value="Banking">Banking</MenuItem>
-                    {/* <MenuItem value={20}>Textile and Garment</MenuItem>
+                  {jobId === 0 ? (
+                    <>
+                      <InputLabel id="demo-simple-select-label">
+                        Select a specialization:
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="category"
+                        name="category"
+                        // value={category}
+                        label="Specialization"
+                        // defaultValue={"Choose a specialization"}
+                        // onChange={(e) => setCategory(e.target.value as string)}
+                        fullWidth
+                      >
+                        <MenuItem value="Software/IT">Software/IT</MenuItem>
+                        <MenuItem value="Electrical">Electrical</MenuItem>
+                        {/* <MenuItem value='Electronics'>Electronics</MenuItem> */}
+                        <MenuItem value="Education">Education</MenuItem>
+                        <MenuItem value="Banking">Banking</MenuItem>
+                        {/* <MenuItem value={20}>Textile and Garment</MenuItem>
                     <MenuItem value={20}>Aviation</MenuItem>
                     <MenuItem value={20}>Accounting</MenuItem>
                     <MenuItem value={20}>Logistics</MenuItem>
                     <MenuItem value={20}>Shipping</MenuItem> */}
-                  </Select>
+                      </Select>
+                    </>
+                  ) : (
+                    <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="category"
+                      label="Category"
+                      id="category"
+                      value={category}
+                      disabled
+                    />
+                  </Grid>
+                  )}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -173,8 +226,8 @@ export default function SignUp() {
                     id="description"
                     multiline
                     rows={10}
-                    // value={value}
-                    // onChange={handleChange}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -187,6 +240,8 @@ export default function SignUp() {
                     InputProps={{ inputProps: { min: "0", step: "1" } }}
                     label="Year Of Experience"
                     autoFocus
+                    value={careerLevel}
+                    onChange={(e) => setCareerLevel(Number(e.target.value))}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -195,10 +250,10 @@ export default function SignUp() {
                     labelId="demo-simple-select-label"
                     id="role"
                     name="role"
-                    // value={category}
                     label="Role"
                     // defaultValue={"Choose a specialization"}
-                    // onChange={(e) => setCategory(e.target.value as string)}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value as string)}
                     fullWidth
                   >
                     <MenuItem value="Part-time">Part-time</MenuItem>
@@ -214,6 +269,8 @@ export default function SignUp() {
                     id="minSalary"
                     label="Min Salary"
                     autoFocus
+                    value={salaryMin}
+                    onChange={(e) => setSalaryMin(Number(e.target.value))}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -224,6 +281,8 @@ export default function SignUp() {
                     label="Max Salary"
                     name="maxSalary"
                     autoComplete="price"
+                    value={salaryMax}
+                    onChange={(e) => setSalaryMax(Number(e.target.value))}
                   />
                 </Grid>
               </Grid>

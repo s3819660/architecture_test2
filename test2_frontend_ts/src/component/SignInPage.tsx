@@ -53,14 +53,14 @@ export default function SignInSide() {
 
           if (res.data) {
             window.sessionStorage.setItem("userId", res.data.id);
-            // const roleSession = window.sessionStorage.getItem("userId");
+            // const userSession = window.sessionStorage.getItem("userId");
 
             if (role === "Employee") {
               navigate("../", { replace: true });
               return;
             }
             if (role === "Employer") {
-              navigate("../", { replace: true });
+              navigate("../employer", { replace: true });
               return
             }
           }

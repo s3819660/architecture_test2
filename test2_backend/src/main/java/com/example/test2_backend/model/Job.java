@@ -46,14 +46,30 @@ public class Job {
     @ManyToOne
     private Employer employer;
 
-    @OneToMany
-    @JsonIgnoreProperties({"application"})
-    private List<Application> applications;
+//    @OneToMany
+//    @JsonIgnoreProperties({"job"})
+//    private List<Application> applications;
 
     public Job() {
     }
 
-    public Job(String title, String location, String salaryRange, double salaryMin, double salaryMax, String category, String description, int careerLevel, String role, LocalDateTime date, Employer employer, List<Application> applications) {
+//    public Job(String title, String location, String salaryRange, double salaryMin, double salaryMax, String category, String description, int careerLevel, String role, LocalDateTime date, Employer employer, List<Application> applications) {
+//        this.title = title;
+//        this.location = location;
+//        this.salaryRange = salaryRange;
+//        this.salaryMin = salaryMin;
+//        this.salaryMax = salaryMax;
+//        this.category = category;
+//        this.description = description;
+//        this.careerLevel = careerLevel;
+//        this.role = role;
+//        this.date = date;
+//        this.employer = employer;
+//        this.applications = applications;
+//    }
+
+
+    public Job(String title, String location, String salaryRange, double salaryMin, double salaryMax, String category, String description, int careerLevel, String role, LocalDateTime date, Employer employer) {
         this.title = title;
         this.location = location;
         this.salaryRange = salaryRange;
@@ -65,7 +81,6 @@ public class Job {
         this.role = role;
         this.date = date;
         this.employer = employer;
-        this.applications = applications;
     }
 
     public Long getId() {
@@ -164,11 +179,11 @@ public class Job {
         this.employer = employer;
     }
 
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+//    public List<Application> getApplications() {
+//        return applications;
+//    }
+//
+//    public void setApplications(List<Application> applications) {
+//        this.applications = applications;
+//    }
 }
